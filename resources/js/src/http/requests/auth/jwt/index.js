@@ -1,6 +1,7 @@
 import axios from '../../../axios/index.js'
 import store from '../../../../store/store.js'
 
+
 // Token Refresh
 let isAlreadyFetchingAccessToken = false
 let subscribers = []
@@ -45,7 +46,7 @@ export default {
     })
   },
   login (email, pwd) {
-    return axios.post('/api/auth/login', {
+    return axios.post('/api/jwt/login', {
       email,
       password: pwd
     })

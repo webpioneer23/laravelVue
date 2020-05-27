@@ -767,7 +767,7 @@ export default {
     // comparedResult: [2, -3, 8],
     // series: [58.6, 34.9, 6.5],
     chartOptions: {
-      labels: ['Desktop', 'Mobile', 'Tablet'],
+      labels: ['Total Owners', 'Pending Owners', 'Trial Owners'],
       dataLabels: {
         enabled: false
       },

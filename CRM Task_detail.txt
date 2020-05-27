@@ -1,0 +1,118 @@
+Hello 
+Let explain in detail what's we need
+
+We use this theme (https://pixinvent.com/demo/vuexy-vuejs-admin-dashboard-template/landing/) the Vue + Laravel version 
+you can see this here (http://161.35.76.201/)
+
+We need to create 3 access (Super admin; Owners; Employees)
+We need to create the full Authentification page (http://prntscr.com/shhqx2)
+
+- For Super admin side we need only Login and Lock Screen page
+- For Owner side we need all of them (http://prntscr.com/shhqx2)
+- For Employees side we need all of them (http://prntscr.com/shhqx2) except Registration page because Employees will be created by Owners
+
+Note: 
+Super admin can see all Owners, he don't need to see all employees 
+Each owners will create his own Employees, that mean Owner 1 cannot see the Owner's 2 employees
+
+
+==== For Super Admin side ====
+- Remove this (http://prntscr.com/setl9t)
+- Remove this (http://prntscr.com/setpmv)
+
+Hide those menus (and leave all menus and should be for all users):
+- http://prntscr.com/seu7o9
+- http://prntscr.com/sev12u
+- http://prntscr.com/sevfp0
+- http://prntscr.com/sevkz0
+
+#1: - Dashboard
+Super admin view should be like that (https://pixinvent.com/demo/vuexy-vuejs-laravel-admin-template/demo-3/dashboard/ecommerce)
+- We need this only (http://prntscr.com/rvgkbh) and (http://prntscr.com/rvgee7) and (http://prntscr.com/rvgf58 + http://prntscr.com/rvgfq2)
+About this (http://prntscr.com/rvgkbh) should have (Owner; Pending owner; Invoice due; Ticket) 
+About this (http://prntscr.com/rvgg7g) should be the data from the all invoices  ########
+About this (http://prntscr.com/rvggs6) should be the data from the all tickets   ########
+About this (http://prntscr.com/rvgh5j) should be the data from the all active owner and trial owner
+About this (http://prntscr.com/rvghvi) should be the data (Total Owner; Owner in pending; Total Free Owner)
+
+#2: Instead "Users" write "Owners"
+We need a page like that (https://pixinvent.com/demo/vuexy-vuejs-laravel-admin-template/demo-3/apps/user/user-list)
+- here (http://prntscr.com/s4rynp) should have (ID; Owner name (with picture); Created date; Country; Payment status; Status; Verified)
+and here (http://prntscr.com/s4s01g) we should use this filter (Country; Payment status; Status; Verified)
+Also we need same function when we tap here (http://prntscr.com/s4s1kf) that mean is open the page like that (https://pixinvent.com/demo/vuexy-vuejs-laravel-admin-template/demo-3/apps/user/user-view/268) 
+Then SuperAdmin can edit or delete the Owner
+
+
+#4: Make a new page and call it "Package"
+Make it same as this page (http://accufy.originlabsoft.com/admin/package)
+Credential = admin/1234
+
+
+#5: Make a new page and call it "Categories"
+Make it same as this page (http://accufy.originlabsoft.com/admin/business/categories)
+Credential = admin/1234
+
+
+#6: Make a new page and call it "Payment Settings"
+Make it same as this page (http://accufy.originlabsoft.com/admin/payment)
+Credential = admin/1234
+
+
+
+==== For Owner side ====
+We need to use the same design as Super Admin
+- Remove this (http://prntscr.com/setl9t)
+- Remove this (http://prntscr.com/setpmv)
+
+Hide those menus (and leave all menus and should be for all users):
+- http://prntscr.com/seu7o9
+- http://prntscr.com/sev12u
+- http://prntscr.com/sevfp0
+- http://prntscr.com/sevkz0
+
+But as I said before Onwers should have to register and the register page should be like that (http://accufy.originlabsoft.com/register):
+About this part (http://prntscr.com/sc5liv) Should be related to this part in Super Admin side (http://accufy.originlabsoft.com/admin/business/categories)
+Then this part (http://prntscr.com/sc5nck) Should be related to this part in Super Admin side (http://accufy.originlabsoft.com/admin/package)
+Then this part (http://accufy.originlabsoft.com/auth/purchase) should be work from this page (http://accufy.originlabsoft.com/admin/payment)
+
+
+#1: - Dashboard
+Leave it this (http://prntscr.com/shibsc)
+
+#2: Instead "Users" write "Employees"
+We need same page as Owners page in SuperAdmin
+- here (http://prntscr.com/s4rynp) should have (ID; Employee name (with picture); Status; Phone; Email; Hired; Salary; Hours, End date;)
+and here (http://prntscr.com/s4s01g) we should use this filter (I will tell you later)
+Also we need same function when we tap here (http://prntscr.com/s4s1kf) that mean is open the page like that (https://pixinvent.com/demo/vuexy-vuejs-laravel-admin-template/demo-3/apps/user/user-view/268) 
+Then Owner can edit or delete the Employees
+But about the Employee page I will tell you what's we have to customize
+
+#3: About "Profile" menu
+Here (http://prntscr.com/sevdlv) (http://prntscr.com/sevlfm) should go to (https://pixinvent.com/demo/vuexy-vuejs-laravel-admin-template/demo-3/apps/user/user-view/268)
+
+
+
+==== For Employees side ====
+We need to use the same design as Super Admin
+- Remove this (http://prntscr.com/setl9t)
+- Remove this (http://prntscr.com/setpmv)
+
+Hide those menus (and leave all menus and should be for all users):
+- http://prntscr.com/seu7o9
+- http://prntscr.com/sev12u
+- http://prntscr.com/sevfp0
+- http://prntscr.com/sevkz0
+
+
+#1: - Dashboard
+Leave it this (http://prntscr.com/shibsc)
+
+
+#2: About "Profile" menu
+Here (http://prntscr.com/sevdlv) (http://prntscr.com/sevlfm) should go to (https://pixinvent.com/demo/vuexy-vuejs-laravel-admin-template/demo-3/apps/user/user-view/268)
+
+
+
+***
+PS: Be carreful about this (http://prntscr.com/s4yw97) because we wil translate in too many language don't code in hard code please
+***

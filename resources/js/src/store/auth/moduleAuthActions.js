@@ -7,12 +7,20 @@
   Author URL: http://www.themeforest.net/user/pixinvent
 ==========================================================================================*/
 
-import jwt from '../../http/requests/auth/jwt/index.js'
+import jwt_server from '../../http/requests/auth/jwt/index.js'
+import auth from "@/auth/authService";
 
 
 import firebase from 'firebase/app'
 import 'firebase/auth'
 import router from '@/router'
+import jwt from 'jsonwebtoken'
+
+
+const jwtConfig = {
+  'secret'   : 'dd5f3089-40c3-403d-af14-d0c228b05cb4',
+  'expireTime': 8000
+}
 
 export default {
   loginAttempt ({ dispatch }, payload) {
@@ -303,22 +311,34 @@ export default {
   loginJWT ({ commit }, payload) {
 
     return new Promise((resolve, reject) => {
-      jwt.login(payload.userDetails.email, payload.userDetails.password)
+      jwt_server.login(payload.userDetails.email, payload.userDetails.password)
         .then(response => {
-
+          console.log("ggg",response.data.userData,"response");
           // If there's user data in response
           if (response.data.userData) {
+
+            const db_user=response.data.userData;
+            const user = Object.assign({}, db_user, {providerId: 'jwt'})
+
+            delete user.password
+
+            const accessToken = jwt.sign({id: user.id}, jwtConfig.secret, {expiresIn: jwtConfig.expireTime})
+
             // Navigate User to homepage
-            router.push(router.currentRoute.query.to || '/')
+            if(user.role === 'superadmin'){
+              router.push(router.currentRoute.query.to || '/')
+            }else{
+              router.push(router.currentRoute.query.to || '/dashboard/analytics')
+            }
 
             // Set accessToken
-            localStorage.setItem('accessToken', response.data.accessToken)
+            localStorage.setItem('accessToken', accessToken)
 
             // Update user details
-            commit('UPDATE_USER_INFO', response.data.userData, {root: true})
+            commit('UPDATE_USER_INFO', user, {root: true})
 
             // Set bearer token in axios
-            commit('SET_BEARER', response.data.accessToken)
+            commit('SET_BEARER', accessToken)
 
             resolve(response)
           } else {

@@ -14,7 +14,7 @@
 
     <vs-input
         data-vv-validate-on="blur"
-        v-validate="'required|min:6|max:10'"
+        v-validate="'required'"
         type="password"
         name="password"
         icon-no-border
@@ -26,11 +26,11 @@
     <span class="text-danger text-sm">{{ errors.first('password') }}</span>
 
     <div class="flex flex-wrap justify-between my-5">
-        <vs-checkbox v-model="checkbox_remember_me" class="mb-3">Remember Me</vs-checkbox>
-        <router-link to="/pages/forgot-password">Forgot Password?</router-link>
+        <!-- <vs-checkbox v-model="checkbox_remember_me" class="mb-3">Remember Me</vs-checkbox> -->
+        <!-- <router-link to="/pages/forgot-password">Forgot Password?</router-link> -->
     </div>
     <div class="flex flex-wrap justify-between mb-3">
-      <vs-button  type="border" @click="registerUser">Register</vs-button>
+      <!-- <vs-button  type="border" @click="registerUser">Register</vs-button> -->
       <vs-button :disabled="!validateForm" @click="loginJWT">Login</vs-button>
     </div>
   </div>
@@ -40,8 +40,8 @@
 export default {
   data () {
     return {
-      email: 'admin@admin.com',
-      password: 'adminadmin',
+      email: 'admin@gmail.com',
+      password: 'admin',
       checkbox_remember_me: false
     }
   },

@@ -31,7 +31,6 @@ mock.onPost('/api/auth/login').reply((request) => {
   let error = 'Something went wrong'
 
   const user = data.users.find(user => user.email === email && user.password === password)
-
   if (user) {
 
     try {

@@ -172,7 +172,7 @@
             <vs-divider />
 
             <!-- FOOTER TYPE -->
-            <div class="mt-4">
+            <!-- <div class="mt-4">
               <h5 class="mb-2">Footer Type</h5>
               <div>
                 <vs-radio v-model="footerTypeLocal" vs-value="hidden" class="mr-4" vs-name="footer-type-hidden">Hidden</vs-radio>
@@ -181,26 +181,26 @@
               </div>
             </div>
 
-            <vs-divider />
+            <vs-divider /> -->
 
             <!-- RTL -->
-            <div class="mt-4 flex justify-between">
+            <!-- <div class="mt-4 flex justify-between">
               <h5 class="mb-2">RTL</h5>
               <vs-switch v-model="rtl" />
             </div>
 
-            <vs-divider />
+            <vs-divider /> -->
 
             <!-- SHOW SCROLL TO TOP -->
-            <div class="mt-4 flex justify-between">
+            <!-- <div class="mt-4 flex justify-between">
               <h5 class="mb-2">Hide Scroll To Top</h5>
               <vs-switch v-model="hideScrollToTopLocal" />
             </div>
 
-            <vs-divider />
+            <vs-divider /> -->
 
             <!-- ROUTER ANIMATION -->
-            <div class="mt-4">
+            <!-- <div class="mt-4">
               <h5 class="mb-2">Router Animation {{ routerTransitionLocal }}</h5>
               <vs-select v-model="routerTransitionLocal">
                 <vs-select-item
@@ -209,7 +209,7 @@
                   :value="item.value"
                   :text="item.text" />
               </vs-select>
-            </div>
+            </div> -->
 
           </div>
         </component>

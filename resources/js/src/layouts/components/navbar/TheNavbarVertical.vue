@@ -27,7 +27,7 @@
 
         <search-bar />
 
-        <cart-drop-down />
+        <!-- <cart-drop-down /> -->
 
         <notification-drop-down />
 

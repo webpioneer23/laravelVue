@@ -14,8 +14,10 @@
                 <statistics-card-line
                   v-if="subscribersGained.analyticsData"
                   icon="UsersIcon"
-                  :statistic="subscribersGained.analyticsData.subscribers | k_formatter"
-                  statisticTitle="Subscribers Gained"
+                  :statistic="statistics.owners"
+                  
+                  :statisticTitle="$t('dash.owners')"
+                  
                   :chartData="subscribersGained.series"
                   type="area" />
             </div>
@@ -24,8 +26,8 @@
                 <statistics-card-line
                   v-if="revenueGenerated.analyticsData"
                   icon="DollarSignIcon"
-                  :statistic="revenueGenerated.analyticsData.revenue | k_formatter"
-                  statisticTitle="Revenue Generated"
+                  :statistic="statistics.pendingOwners"
+                  :statisticTitle="$t('dash.pendingOwners')"
                   :chartData="revenueGenerated.series"
                   color="success"
                   type="area" />
@@ -35,8 +37,8 @@
                 <statistics-card-line
                   v-if="quarterlySales.analyticsData"
                   icon="ShoppingCartIcon"
-                  :statistic="quarterlySales.analyticsData.sales"
-                  statisticTitle="Quarterly Sales"
+                  :statistic="statistics.invoices"
+                  :statisticTitle="$t('dash.invoices')"
                   :chartData="quarterlySales.series"
                   color="danger"
                   type="area" />
@@ -45,8 +47,8 @@
                 <statistics-card-line
                   v-if="ordersRecevied.analyticsData"
                   icon="ShoppingBagIcon"
-                  :statistic="ordersRecevied.analyticsData.orders | k_formatter"
-                  statisticTitle="Orders Received"
+                  :statistic="statistics.tickets"
+                  :statisticTitle="$t('dash.tickets')"
                   :chartData="ordersRecevied.series"
                   color="warning"
                   type="area" />
@@ -113,7 +115,7 @@
         <div class="vx-row">
 
             <div class="vx-col w-full md:w-1/3 lg:w-1/3 xl:w-1/3 mb-base">
-                <vx-card title="Browser Statistics">
+                <!-- <vx-card title="Browser Statistics">
                     <div v-for="(browser, index) in browserStatistics" :key="browser.id" :class="{'mt-4': index}">
                         <div class="flex justify-between">
                             <div class="flex flex-col">
@@ -130,100 +132,44 @@
                         </div>
                         <vs-progress :percent="browser.ratio"></vs-progress>
                     </div>
+                </vx-card> -->
+                <vx-card title="Owners">
+                    <!-- SLOT = ACTIONS -->
+                    <template slot="actions">
+                        <change-time-duration-dropdown />
+                    </template>
+
+                    <div slot="no-body">
+                        <vue-apex-charts class="mt-6 mb-8" type="donut" height="325" :options="analyticsData.sessionsByDeviceDonut.chartOptions" :series="pie_chart.series" />
+                    </div>
+
+                    <ul class="mt-6">
+                        <li v-for="deviceData in pie_chart.analyticsData" :key="deviceData.device" class="flex mb-3">
+                            <feather-icon :icon="deviceData.icon" :svgClasses="[`h-5 w-5 stroke-current text-${deviceData.color}`]"></feather-icon>
+                            <span class="ml-2 inline-block font-semibold">{{ deviceData.device }}</span>
+                            <span class="mx-2">-</span>
+                            <!-- <span class="mr-4">{{ deviceData.sessionsPercentage }}%</span>
+                            <div class="ml-auto flex -mr-1">
+                            <span class="mr-1">{{ deviceData.comparedResultPercentage }}%</span>
+                            <feather-icon :icon=" deviceData.comparedResultPercentage < 0 ? 'ArrowDownIcon' : 'ArrowUpIcon'" :svgClasses="[deviceData.comparedResultPercentage < 0 ? 'text-danger' : 'text-success'  ,'stroke-current h-4 w-4 mb-1 mr-1']"></feather-icon> -->
+                            <!-- </div> -->
+                        </li>
+                    </ul>
                 </vx-card>
             </div>
 
             <div class="vx-col w-full md:w-2/3">
                 <vx-card title="Client Retention">
                     <div class="flex">
-                        <span class="flex items-center"><div class="h-3 w-3 rounded-full mr-1 bg-primary"></div><span>New Clients</span></span>
-                        <span class="flex items-center ml-4"><div class="h-3 w-3 rounded-full mr-1 bg-danger"></div><span>Retained Clients</span></span>
+                        <span class="flex items-center"><div class="h-3 w-3 rounded-full mr-1 bg-primary"></div><span>{{$t('activeOwners')}}</span></span>
+                        <span class="flex items-center ml-4"><div class="h-3 w-3 rounded-full mr-1 bg-danger"></div><span>{{$t('trialOwners')}}</span></span>
                     </div>
-                    <vue-apex-charts type="bar" height="277" :options="analyticsData.clientRetentionBar.chartOptions" :series="clientRetentionBar.series" />
+                    <vue-apex-charts type="bar" height="277" :options="analyticsData.clientRetentionBar.chartOptions" :series="ownerVStrial" />
                 </vx-card>
             </div>
         </div>
 
-        <div class="vx-row">
-            <!-- Sessions By Device -->
-            <div class="vx-col w-full lg:w-1/3 lg:mt-0 mt-base">
-                <vx-card title="Sessions By Device">
-                    <!-- SLOT = ACTIONS -->
-                    <template slot="actions">
-                        <change-time-duration-dropdown />
-                    </template>
-
-                    <div slot="no-body">
-                        <vue-apex-charts class="mt-6 mb-8" type="donut" height="325" :options="analyticsData.sessionsByDeviceDonut.chartOptions" :series="sessionsData.series" />
-                    </div>
-
-                    <ul class="mt-6">
-                        <li v-for="deviceData in sessionsData.analyticsData" :key="deviceData.device" class="flex mb-3">
-                            <feather-icon :icon="deviceData.icon" :svgClasses="[`h-5 w-5 stroke-current text-${deviceData.color}`]"></feather-icon>
-                            <span class="ml-2 inline-block font-semibold">{{ deviceData.device }}</span>
-                            <span class="mx-2">-</span>
-                            <span class="mr-4">{{ deviceData.sessionsPercentage }}%</span>
-                            <div class="ml-auto flex -mr-1">
-                            <span class="mr-1">{{ deviceData.comparedResultPercentage }}%</span>
-                            <feather-icon :icon=" deviceData.comparedResultPercentage < 0 ? 'ArrowDownIcon' : 'ArrowUpIcon'" :svgClasses="[deviceData.comparedResultPercentage < 0 ? 'text-danger' : 'text-success'  ,'stroke-current h-4 w-4 mb-1 mr-1']"></feather-icon>
-                            </div>
-                        </li>
-                    </ul>
-                </vx-card>
-            </div>
-
-            <!-- CHAT CARD -->
-            <div class="vx-col w-full lg:w-1/3 lg:mt-0 mt-base">
-                <vx-card title="Chat" class="overflow-hidden">
-                    <template slot="no-body">
-                        <div class="chat-card-log">
-                            <component :is="scrollbarTag" ref="chatLogPS" class="scroll-area pt-6 px-6" :settings="settings" :key="$vs.rtl">
-                                <ul ref="chatLog">
-                                        <li class="flex items-start" :class="{'flex-row-reverse': msg.isSent, 'mt-4': index}" v-for="(msg, index) in chatLog" :key="index">
-                                            <vs-avatar size="40px" class="m-0 flex-shrink-0" :class="msg.isSent ? 'ml-5' : 'mr-5'" :src="msg.senderImg"></vs-avatar>
-                                            <div class="msg relative bg-white shadow-md py-3 px-4 mb-2 rounded-lg max-w-md" :class="{'chat-sent-msg bg-primary-gradient text-white': msg.isSent, 'border border-solid d-theme-border-grey-light': !msg.isSent}">
-                                                <span>{{ msg.msg }}</span>
-                                            </div>
-                                        </li>
-                                </ul>
-                            </component>
-                        </div>
-                        <div class="flex bg-white chat-input-container p-6">
-                            <vs-input class="mr-3 w-full" v-model="chatMsgInput" @keyup.enter="chatMsgInput = ''" placeholder="Type Your Message" ></vs-input>
-                            <vs-button icon-pack="feather" icon="icon-send" @click="chatMsgInput = ''"></vs-button>
-                        </div>
-                    </template>
-                </vx-card>
-            </div>
-
-
-            <!-- CUSTOMERS CHART -->
-            <div class="vx-col w-full lg:w-1/3 lg:mt-0 mt-base">
-                <vx-card title="Customers">
-                    <!-- SLOT = ACTIONS -->
-                    <template slot="actions">
-                        <change-time-duration-dropdown />
-                    </template>
-
-                    <div slot="no-body">
-                        <!-- CHART -->
-                        <vue-apex-charts type="pie" height="345" class="mt-10 mb-10" :options="analyticsData.customersPie.chartOptions" :series="customersData.series" />
-
-                        <!-- CHART DATA -->
-                        <ul class="mb-1">
-                            <li v-for="customerData in customersData.analyticsData" :key="customerData.customerType" class="flex justify-between py-3 px-6 border d-theme-border-grey-light border-solid border-r-0 border-l-0 border-b-0">
-                                <span class="flex items-center">
-                                    <span class="inline-block h-3 w-3 rounded-full mr-2" :class="`bg-${customerData.color}`"></span>
-                                    <span class="font-semibold">{{ customerData.customerType }}</span>
-                                </span>
-                                <span>{{ customerData.counts }}</span>
-                            </li>
-                        </ul>
-                    </div>
-
-                </vx-card>
-            </div>
-        </div>
+       
     </div>
 </template>
 
@@ -234,6 +180,7 @@ import StatisticsCardLine from '@/components/statistics-cards/StatisticsCardLine
 import analyticsData from './ui-elements/card/analyticsData.js'
 import ChangeTimeDurationDropdown from '@/components/ChangeTimeDurationDropdown.vue'
 
+
 export default{
   components: {
     VueApexCharts,
@@ -243,6 +190,10 @@ export default{
   },
   data () {
     return {
+      statistics:{},
+      ownerVStrial:[],
+      pie_chart:{},
+
       subscribersGained: {},
       revenueGenerated: {},
       quarterlySales: {},
@@ -274,6 +225,15 @@ export default{
     scroll_el.scrollTop = this.$refs.chatLog.scrollHeight
   },
   created () {
+    //static data
+    this.$http.get('/api/admin-dashboard/statistics')
+        .then((response)=>{
+            console.log("response",response.data);
+            this.statistics = response.data.statics; 
+            this.ownerVStrial=response.data.ownerVStrial;
+            this.pie_chart=response.data.pie_chart;
+            })
+        .catch((error)=>{console.log(error)})
     // Subscribers gained - Statistics
     this.$http.get('/api/card/card-statistics/subscribers')
       .then((response) => { this.subscribersGained = response.data })

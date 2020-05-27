@@ -10,7 +10,6 @@
         </li>
       </draggable>
     </ul>
-
     <!-- STARRED PAGES MORE -->
     <div class="vx-navbar__starred-pages--more-dropdown" v-if="starredPagesMore.length">
       <vs-dropdown vs-custom-content vs-trigger-click class="cursor-pointer">
@@ -27,7 +26,6 @@
         </vs-dropdown-menu>
       </vs-dropdown>
     </div>
-
     <div class="bookmark-container">
       <feather-icon icon="StarIcon" :svgClasses="['stoke-current text-warning', textColor]" class="cursor-pointer p-2" @click.stop="showBookmarkPagesDropdown = !showBookmarkPagesDropdown" />
       <div v-click-outside="outside" class="absolute bookmark-list w-1/3 xl:w-1/4 mt-4" v-if="showBookmarkPagesDropdown">

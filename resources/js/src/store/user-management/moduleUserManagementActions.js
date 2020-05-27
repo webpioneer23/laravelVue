@@ -22,9 +22,22 @@ export default {
   // },
   fetchUsers ({ commit }) {
     return new Promise((resolve, reject) => {
-      axios.get('/api/user-management/users')
+      // axios.get('/api/user-management/users')
+      axios.get('/api/owners')
         .then((response) => {
+          console.log("response", response)
           commit('SET_USERS', response.data)
+          resolve(response)
+        })
+        .catch((error) => { reject(error) })
+    })
+  },
+  fetchCountries ({ commit }) {
+    return new Promise((resolve, reject) => {
+      // axios.get('/api/user-management/users')
+      axios.get('/api/countries')
+        .then((response) => {
+          commit('SET_COUNTRIES', response.data)
           resolve(response)
         })
         .catch((error) => { reject(error) })
@@ -32,8 +45,9 @@ export default {
   },
   fetchUser (context, userId) {
     return new Promise((resolve, reject) => {
-      axios.get(`/api/user-management/users/${userId}`)
+      axios.get(`/api/fetch_owner/${userId}`)
         .then((response) => {
+          console.log("sdf",response)
           resolve(response)
         })
         .catch((error) => { reject(error) })
@@ -41,8 +55,9 @@ export default {
   },
   removeRecord ({ commit }, userId) {
     return new Promise((resolve, reject) => {
-      axios.delete(`/api/user-management/users/${userId}`)
+      axios.delete(`/api/owner/${userId}`)
         .then((response) => {
+          console.log("gggg", response);
           commit('REMOVE_RECORD', userId)
           resolve(response)
         })
